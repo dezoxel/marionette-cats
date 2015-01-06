@@ -25,3 +25,11 @@ var AngryCatsView = Backbone.Marionette.CompositeView.extend({
     collectionView.$('tbody').append(itemView.el);
   }
 });
+
+MyApp.addInitializer(function(options) {
+  var angryCatsView = new AngryCatsView({
+    collection: options.cats
+  });
+
+  MyApp.mainRegion.show(angryCatsView);
+});
