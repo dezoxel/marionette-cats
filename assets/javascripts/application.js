@@ -15,3 +15,13 @@ var AngryCatView = Backbone.Marionette.ItemView.extend({
   tagName: 'tr',
   className: 'angry_cat'
 });
+
+var AngryCatsView = Backbone.Marionette.CompositeView.extend({
+  template: '#angry_cats-template',
+  tagName: 'table',
+  className: 'table_striped table-bordered',
+  itemView: AngryCatView,
+  appendHtml: function(collectionView, itemView) {
+    collectionView.$('tbody').append(itemView.el);
+  }
+});
