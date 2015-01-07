@@ -4,7 +4,11 @@ window.MyApp.addRegions({
   mainRegion: '#content'
 });
 
-var AngryCat = Backbone.Model.extend({});
+var AngryCat = Backbone.Model.extend({
+  defaults: {
+    rank: 0
+  }
+});
 
 var AngryCats = Backbone.Collection.extend({
   model: AngryCat
