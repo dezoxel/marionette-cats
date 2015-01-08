@@ -11,7 +11,15 @@ var AngryCat = Backbone.Model.extend({
 });
 
 var AngryCats = Backbone.Collection.extend({
-  model: AngryCat
+  model: AngryCat,
+
+  initialize: function(cats) {
+    var rank = 1;
+    _.each(cats, function(cat) {
+      cat.set('rank', rank);
+      ++rank;
+    });
+  }
 });
 
 var AngryCatView = Backbone.Marionette.ItemView.extend({
