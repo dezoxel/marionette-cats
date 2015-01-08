@@ -7,6 +7,14 @@ window.MyApp.addRegions({
 var AngryCat = Backbone.Model.extend({
   defaults: {
     rank: 0
+  },
+
+  rankUp: function() {
+    this.set('rank', this.get('rank') - 1);
+  },
+
+  rankDown: function() {
+    this.set('rank', this.get('rank') + 1);
   }
 });
 
@@ -20,17 +28,49 @@ var AngryCats = Backbone.Collection.extend({
       ++rank;
     });
 
+    var self = this;
+
     MyApp.vent.on('rank:up', function(cat) {
-      console.log('rank up');
+      if (cat.get('rank') === 1) {
+        // can't encrease rank of top-ranked cat
+        return true;
+      }
+
+      self.rankUpFor(cat);
+      self.sort();
     });
 
     MyApp.vent.on('rank:down', function(cat) {
-      console.log('rank down');
+      if (cat.get('rank') === self.size()) {
+        // can't decrease rank of lowest ranked cat
+        return true;
+      }
+
+      self.rankDownFor(cat);
+      self.sort();
     });
   },
 
   comparator: function(cat) {
     return cat.get('rank');
+  },
+
+  rankUpFor: function(cat) {
+    var rankToSwap = cat.get('rank') - 1;
+    // -1 because rank starting from 1, but array indexing starting from 0
+    var rankDownCat = this.at(rankToSwap - 1);
+
+    cat.rankUp();
+    rankDownCat.rankDown();
+  },
+
+  rankDownFor: function(cat) {
+    var rankToSwap = cat.get('rank') + 1;
+    // -1 because rank starting from 1, but array indexing starting from 0
+    var rankUpCat = this.at(rankToSwap - 1);
+
+    cat.rankDown();
+    rankUpCat.rankUp();
   }
 });
 
