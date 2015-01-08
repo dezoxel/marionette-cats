@@ -25,7 +25,20 @@ var AngryCats = Backbone.Collection.extend({
 var AngryCatView = Backbone.Marionette.ItemView.extend({
   template: '#angry_cat-template',
   tagName: 'tr',
-  className: 'angry_cat'
+  className: 'angry_cat',
+
+  events: {
+    'click .rank_up img': 'rankUp',
+    'click .rank_down img': 'rankDown'
+  },
+
+  rankUp: function() {
+    console.log('Rank Up');
+  },
+
+  rankDown: function() {
+    console.log('Rank Down');
+  }
 });
 
 var AngryCatsView = Backbone.Marionette.CompositeView.extend({
