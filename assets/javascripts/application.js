@@ -5,9 +5,6 @@ window.MyApp.addRegions({
 });
 
 var AngryCat = Backbone.Model.extend({
-  defaults: {
-    rank: 0
-  },
 
   rankUp: function() {
     this.set('rank', this.get('rank') - 1);
@@ -120,4 +117,6 @@ $(document).ready(function() {
   ]);
 
   MyApp.start({cats: cats});
+
+  cats.add(new AngryCat({name: 'Cranky Cat', image_path: './assets/images/cat4.jpg'}));
 });
