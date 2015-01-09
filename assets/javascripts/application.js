@@ -25,6 +25,14 @@ var AngryCats = Backbone.Collection.extend({
       ++rank;
     });
 
+    this.on('add', function(cat) {
+      if (!cat.get('rank')) {
+        var error = new Error('Cat must have a rank defined before being added to the collection');
+        error.name = 'NoRankError';
+        throw error;
+      }
+    });
+
     var self = this;
 
     MyApp.vent.on('rank:up', function(cat) {
@@ -46,6 +54,7 @@ var AngryCats = Backbone.Collection.extend({
       self.rankDownFor(cat);
       self.sort();
     });
+
   },
 
   comparator: function(cat) {
