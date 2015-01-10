@@ -127,5 +127,5 @@ $(document).ready(function() {
 
   MyApp.start({cats: cats});
 
-  cats.add(new AngryCat({name: 'Cranky Cat', image_path: './assets/images/cat4.jpg'}));
+  cats.add(new AngryCat({name: 'Cranky Cat', image_path: './assets/images/cat4.jpg', rank: cats.size() + 1}));
 });
