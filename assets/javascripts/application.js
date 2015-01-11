@@ -5,6 +5,9 @@ window.MyApp.addRegions({
 });
 
 var AngryCat = Backbone.Model.extend({
+  defaults: {
+    votes: 0
+  },
 
   rankUp: function() {
     this.set('rank', this.get('rank') - 1);
@@ -12,6 +15,10 @@ var AngryCat = Backbone.Model.extend({
 
   rankDown: function() {
     this.set('rank', this.get('rank') + 1);
+  },
+
+  addVote: function() {
+    this.set('votes', this.get('votes') + 1);
   }
 });
 
@@ -91,10 +98,12 @@ var AngryCatView = Backbone.Marionette.ItemView.extend({
   },
 
   rankUp: function() {
+    this.model.addVote();
     MyApp.vent.trigger('rank:up', this.model);
   },
 
   rankDown: function() {
+    this.model.addVote();
     MyApp.vent.trigger('rank:down', this.model);
   }
 });
