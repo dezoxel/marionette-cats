@@ -52,6 +52,8 @@ var AngryCats = Backbone.Collection.extend({
       catsToUprank.forEach(function(cat) {
         cat.rankUp();
       });
+
+      self.trigger('reset');
     });
 
     MyApp.vent.on('rank:up', function(cat) {
