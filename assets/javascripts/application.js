@@ -42,6 +42,18 @@ var AngryCats = Backbone.Collection.extend({
 
     var self = this;
 
+    MyApp.vent.on('cat:disqualify', function(cat) {
+      var disqualifiedRank = cat.get('rank');
+
+      var catsToUprank = self.filter(function(cat) {
+        return cat.get('rank') > disqualifiedRank;
+      });
+
+      catsToUprank.forEach(function(cat) {
+        cat.rankUp();
+      });
+    });
+
     MyApp.vent.on('rank:up', function(cat) {
       if (cat.get('rank') === 1) {
         // can't encrease rank of top-ranked cat
@@ -113,6 +125,7 @@ var AngryCatView = Backbone.Marionette.ItemView.extend({
   },
 
   disqualify: function() {
+    MyApp.vent.trigger('cat:disqualify', this.model);
     this.model.destroy();
   }
 });
